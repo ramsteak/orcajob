@@ -1,8 +1,9 @@
+pub mod common;
+
 extern crate toml;
 extern crate clap;
 
 use clap::{arg, ArgAction, Command};
-
 
 
 fn main(){
