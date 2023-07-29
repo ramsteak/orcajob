@@ -1,4 +1,6 @@
+#![allow(unused_imports)]
 pub mod common;
+
 
 use common::{JOBS_FILE, JOBS_LOCK, DONE_FILE, DONE_LOCK, WORK_FILE, WORK_LOCK, CONF_FILE, ORCARC_DEFAULT, JOBS_FOLD};
 use common::{acquire_lock,release_lock,merge_toml};
@@ -6,7 +8,7 @@ use std::fs;
 use std::io::{self,BufReader, Seek, SeekFrom, Read, BufRead};
 use std::path;
 use std::time::Duration;
-use toml::Value;
+use toml;
 use std::thread;
 use std::fs::File;
 
@@ -18,13 +20,13 @@ fn read_config(path: &str) -> Config {
             ORCARC_DEFAULT.to_string()
         }
     };
-    let default = ORCARC_DEFAULT.to_string().parse::<Value>().unwrap();
+    let default = ORCARC_DEFAULT.to_string().parse::<toml::Value>().unwrap();
 
-    let mut conf = match confstr.parse::<Value>() {
+    let mut conf = match confstr.parse::<toml::Value>() {
         Ok(conf) => conf,
         // This line should never result in panic, the fixed values for orcarc
         // should always work
-        Err(_) => ORCARC_DEFAULT.to_string().parse::<Value>().unwrap(),
+        Err(_) => ORCARC_DEFAULT.to_string().parse::<toml::Value>().unwrap(),
     };
     merge_toml(&mut conf, &default);
 
