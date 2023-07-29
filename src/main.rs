@@ -14,7 +14,6 @@ use rand::distributions::Alphanumeric;
 use rand::{thread_rng, Rng};
 use std::collections::hash_map::Entry;
 use std::io::{BufReader, Read, Write, Seek};
-use std::os::windows::prelude::FileExt;
 use std::{io, path};
 use std::fs::{self, File};
 use std::time::{SystemTime,UNIX_EPOCH};
