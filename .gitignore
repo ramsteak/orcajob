@@ -1,4 +1,6 @@
 env/
+test.py
+.vscode/
 
 /target
 
