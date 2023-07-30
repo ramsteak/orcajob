@@ -144,15 +144,15 @@ fn check_job_complete(jobpath: path::PathBuf) -> io::Result<bool> {
 }
 
 fn completedjobs() -> io::Result<()>{
-    let (work, lock) = acquire_lock(WORK_FILE, WORK_LOCK)?;
-    let inprogress = BufReader::new(work);
+    // let lock = acquire_lock(WORK_LOCK)?;
+    // let inprogress = BufReader::new(work);
 
-    for job in inprogress.lines() {
-        if let Ok(job) = job {
-            let jobdir = path::Path::new(JOBS_FOLD).join(job);
-        }
-    }
-    release_lock(&lock)?;
+    // for job in inprogress.lines() {
+    //     if let Ok(job) = job {
+    //         let jobdir = path::Path::new(JOBS_FOLD).join(job);
+    //     }
+    // }
+    // release_lock(&lock)?;
     Ok(())
 }
 
