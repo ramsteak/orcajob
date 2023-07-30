@@ -16,13 +16,19 @@ use std::io;
 use std::{fs::File, path::Path};
 use toml::Value;
 
-pub fn acquire_lock(pfile: &str, plock: &str) -> io::Result<(File, File)> {
-    let jobs_lock_path = Path::new(plock);
-    let jobs_lock = File::create(jobs_lock_path)?;
-    jobs_lock.try_lock_exclusive()?;
+pub fn acquire_lock(plock: &str) -> io::Result<File> {
+    let lock_path = Path::new(plock);
+    let lock = File::create(lock_path)?;
+    lock.try_lock_exclusive()?;
 
-    let jobs_file = File::open(Path::new(pfile))?;
-    return Ok((jobs_file, jobs_lock));
+    return Ok(lock);
+}
+pub fn acquire_lock_wait(plock: &str) -> io::Result<File> {
+    let lock_path = Path::new(plock);
+    let lock = File::create(lock_path)?;
+    lock.lock_exclusive()?;
+
+    return Ok(lock);
 }
 pub fn release_lock(lock: &File) -> io::Result<()> {
     lock.unlock()?;
@@ -46,6 +52,13 @@ pub fn merge_toml(base: &mut Value, default: &Value) {
 pub const ORCARC_DEFAULT : &str = "\
 maxproc = 4
 checkinterval = 10
+deleteafter = \"5d\"
+
+[defaultjob]
+name = \"notset\"
+author = \"notset\"
+
+[defaultjob.after]
 copyfiles = [
     \".densities\",
     \".engrad\",
@@ -57,5 +70,15 @@ copyfiles = [
     \"_property.txt\",
     \"_trj.xyz\",
     \".xyz\"
-]";
+]
+
+[defaultjob.scheduling]
+priority = 1
+maxtime = \"1h\"
+nprocs = 1
+restartpolicy = \"none\"
+maxrestart = 0
+
+[defaultjob.notify]
+";
 
