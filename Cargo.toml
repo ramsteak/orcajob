@@ -10,6 +10,7 @@ clap = {version = "4.3.19", features = ["derive", "cargo"]}
 fs2 = "0.4.3"
 prettytable = "0.10.0"
 rand = "0.8.5"
+regex = "1.9.1"
 toml = "0.7.6"
 whoami = "1.4.1"
 
@@ -21,3 +22,7 @@ path = "src/main.rs"
 [[bin]]
 name = "orcajobd"
 path = "src/daemon.rs"
+
+[[bin]]
+name = "testorcarc"
+path = "src/orcarc.rs"
