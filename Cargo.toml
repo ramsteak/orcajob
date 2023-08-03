@@ -22,7 +22,3 @@ path = "src/main.rs"
 [[bin]]
 name = "orcajobd"
 path = "src/daemon.rs"
-
-[[bin]]
-name = "testorcarc"
-path = "src/orcarc.rs"
